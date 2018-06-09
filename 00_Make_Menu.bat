@@ -18,8 +18,8 @@ echo.
 echo 	  Working ON: %CUR_PATH%
 echo.
 
-echo 	0. Clean
-echo 	1. Build Data
+echo 	0. Set up
+echo 	1. Build Android
 echo 	2. Build Win32
 echo 	3. Build SO
 echo 	4. Build APK Debug
@@ -30,21 +30,19 @@ echo 	99. Exit
 echo.
 set /p opt=		Enter choose: 
 
-if "%opt%"=="0" goto Clean
-if "%opt%"=="1" goto Build_Data
+if "%opt%"=="0" goto Set_up
+if "%opt%"=="1" goto Build_Android
 if "%opt%"=="2" goto Build_Win32
 if "%opt%"=="3" goto Build_Native
 if "%opt%"=="4" goto Build_Apk
 if "%opt%"=="5" goto Build_Full
 
 REM-------------------------Function--------------------------
-:fClean
-	echo Clear ....
-	call git clean -fd
-	call git clean -f -x -d
-	call git clean -fxd
-	call git clean -fd
-	call reset --hard
+:fSetup
+	call npm install
+	exit /b
+:fBuild_Android
+	call react-native run-android
 	exit /b
 :fBuild_Native
 	echo Build SO
@@ -60,14 +58,14 @@ REM-------------------------Function--------------------------
 	exit /b
 REM-----------------------------------------------------------
 
-REM------------ 00. Clean GIT.-------------
-:Clean
-	call :fClean
+REM------------ 00. Set Up.-------------
+:Set_up
+	call :fSetup
 goto :End
 
-REM------------ 01. Build Data-------------
-:Build_Data
-
+REM------------ 01. Build Android-------------
+:Build_Android
+	call :fBuild_Android
 goto :End
 REM----------------------------------------
 
