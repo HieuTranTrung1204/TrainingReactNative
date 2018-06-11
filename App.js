@@ -22,28 +22,16 @@ export default class App extends Component{
   constructor(props){
     super(props);
     this.state = {
-      marginTopAnim: new Animated.Value(0), // Initial value
-      scaleAnim: new Animated.Value(1),
+      animZoomFontSize: new Animated.Value(10),
     }
   }
 
-  componentDidMount(){
+  _onPress(){
     Animated.timing(
-      this.state.marginTopAnim,
+      this.state.animZoomFontSize,
       {
-        duration: 400,
-        toValue: 300,
-        easing: Easing.bezier(1, 0, 0, 1)        
-      }
-    ).start();
-
-    Animated.timing(
-      this.state.scaleAnim,
-      {
-        duration: 400,
-        toValue: 0.5,
-        easing: Easing.linear,
-        delay: 1000,
+        toValue: 30,
+        duration: 400
       }
     ).start();
   }
@@ -52,16 +40,12 @@ export default class App extends Component{
 
     return (
       <View style={styles.container}>
-        <Animated.View 
-          style = {{
-            backgroundColor: 'aqua',
-            width: 100,
-            height: 100,
-            borderRadius: 50,
-            marginTop: this.state.marginTopAnim,
-            transform: [ {scale: this.state.scaleAnim } ]
-          }}
-        />
+        <Animated.Text style={{fontSize: this.state.animZoomFontSize}}>Ðu?ng L?p Tùng</Animated.Text>
+        <View style={styles.containerBtn}>
+            <TouchableOpacity onPress = {this._onPress.bind(this)}>
+              <Text style={styles.btn}>press Me</Text>
+            </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -72,5 +56,14 @@ const styles = StyleSheet.create({
     flex: 1,
     
   },
+  containerBtn: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  btn: {
+    color: 'white',
+    padding: 10,
+    backgroundColor: 'green'
+  },
 });
-
