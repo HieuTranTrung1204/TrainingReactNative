@@ -30,3 +30,5 @@ Thao tác với Animation
     + addListener
     + removeListener
     + stopAnimation
+    + ValueXY
+    + Spring: This spring allows for us to define values that will animate from the start to end without having to define a specific amount of time like in "timing" ( Image )
