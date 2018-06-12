@@ -21,17 +21,25 @@ export default class App extends Component{
   
   constructor(props){
     super(props);
+
+    anim = new Animated.Value(10),
+
     this.state = {
-      animZoomFontSize: new Animated.Value(10),
+      animZoomFontSize: anim,
     }
+
+    changeFontSize = anim.interpolate({
+      inputRange:[10,30,50,70,100],
+      outputRange:[30,20,40,50,40]
+    })
   }
 
   _onPress(){
     Animated.timing(
       this.state.animZoomFontSize,
       {
-        toValue: 30,
-        duration: 400
+        toValue: 100,
+        duration: 4000
       }
     ).start();
   }
@@ -40,10 +48,18 @@ export default class App extends Component{
 
     return (
       <View style={styles.container}>
-        <Animated.Text style={{fontSize: this.state.animZoomFontSize}}>Ðu?ng L?p Tùng</Animated.Text>
+        <Animated.Text 
+          style={{left:this.state.animZoomFontSize,color: this.state.animZoomFontSize.interpolate({
+            inputRange:[10,50,100],
+            outputRange:["gray","yellow","red"]          
+          }),
+          fontSize: changeFontSize
+        }}>Barry Allen</Animated.Text>
+        
+        
         <View style={styles.containerBtn}>
             <TouchableOpacity onPress = {this._onPress.bind(this)}>
-              <Text style={styles.btn}>press Me</Text>
+              <Text style={styles.btn}>Thay đổi kích thích chữ</Text>
             </TouchableOpacity>
         </View>
       </View>
@@ -54,12 +70,15 @@ export default class App extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    height:300,
+    backgroundColor: 'tomato'
   },
   containerBtn: {
     flex:1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'aqua',
+    marginTop: 10,
   },
   btn: {
     color: 'white',
