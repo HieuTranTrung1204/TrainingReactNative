@@ -21,26 +21,34 @@ export default class App extends Component{
   
   constructor(props){
     super(props);
+
+    animValueXY = new Animated.ValueXY();
+
     this.state = {
-      animZoomFontSize: new Animated.Value(10),
+      changeXY: animValueXY,
     }
+
   }
 
   _onPress(){
     Animated.timing(
-      this.state.animZoomFontSize,
+      this.state.changeXY,
       {
-        toValue: 30,
-        duration: 400
+        toValue: {
+          x: 150, // left
+          y: 150  // top
+        },
+        duration: 2000
       }
     ).start();
+
   }
   
   render() {
 
     return (
       <View style={styles.container}>
-        <Animated.Text style={{fontSize: this.state.animZoomFontSize}}>Ðu?ng L?p Tùng</Animated.Text>
+        <Animated.Text style={this.state.changeXY.getLayout()}>Barry Allen</Animated.Text>
         <View style={styles.containerBtn}>
             <TouchableOpacity onPress = {this._onPress.bind(this)}>
               <Text style={styles.btn}>press Me</Text>
