@@ -9,30 +9,54 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Animated,
+  TouchableOpacity
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component{
+  
+  constructor(props) {
+    super(props);
+    
+    animValue = new Animated.Value(0); // Initial
+
+    let animValueListenerId = animValue.addListener((value)=> alert(value));
+
+    animValue.removeListener(animValueListenerId);
+
+    this.state = {
+      changeFontSize: animValue,
+    };
+  }
+
+  _onPress(){
+    Animated.timing(
+      this.state.changeFontSize,
+      {
+        toValue: 25,
+        duration: 400
+      }
+    ).start();
+  }
+
+  _stopAnim(){
+    animValue.stopAnimation((value)=>alert(value));
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <Animated.Text style={{fontSize:this.state.changeFontSize}}>Barry Allen</Animated.Text>
+        <View style={styles.containerBtn}>
+            <TouchableOpacity onPress = {this._onPress.bind(this)}>
+              <Text style={styles.btn}>create Animation</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress = {this._stopAnim.bind(this)}>
+              <Text style={styles.btnStop}>stop Animation</Text>
+            </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -41,18 +65,22 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+  
+  },
+  containerBtn: {
+    flex:1,
+    justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flexDirection: 'row',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  btn: {
+    color: 'white',
+    padding: 10,
+    backgroundColor: 'green'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  btnStop: {
+    color: 'white',
+    padding: 10,
+    backgroundColor: 'tomato'
   },
 });
