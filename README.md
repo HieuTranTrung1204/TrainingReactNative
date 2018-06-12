@@ -20,3 +20,13 @@ Thao tác với Animation
   + easing: Default is easeInOut (See more: https://easings.net/)
   + delay: Start the Anim after delay ( Default: 0 ) (ms)  
   + useNativeDriver: Uses the native driver when true. Default is false
+
+
+---------------------- NOTE METHOD ----------------------
+
+1. Animated.Value
+    + setValue // Init
+    + interpolate
+    + addListener
+    + removeListener
+    + stopAnimation
