@@ -13,6 +13,7 @@ Thao tác với Animation
 
   + Animated.spring(): Create an animation with physical model by using velocity to create fluid motions as the toValue updates.
 
+  +Animated.decay(): The typical use of decay is to take something that may be moving at a particular velocity and apply deceleration to it. One such use case is throwing a card. The finger will cause the card to move at a sepcific velocity. Most commonly, this will be used with PanResponder and Animated.ValueXY
 
 1. Animated:
   + toValue: Animation value will update yo

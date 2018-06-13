@@ -21,17 +21,20 @@ export default class App extends Component{
   
   constructor(props){
     super(props);
+
+    animDecay = new Animated.ValueXY();
+
     this.state = {
-      animZoomFontSize: new Animated.Value(10),
+      
     }
   }
 
   _onPress(){
-    Animated.timing(
-      this.state.animZoomFontSize,
+    Animated.decay(
+      animDecay,
       {
-        toValue: 30,
-        duration: 400
+        velocity: 100, // vận tốc
+        deceleration: 0.2 // giảm tốc
       }
     ).start();
   }
@@ -40,7 +43,7 @@ export default class App extends Component{
 
     return (
       <View style={styles.container}>
-        <Animated.Text style={{fontSize: this.state.animZoomFontSize}}>Ðu?ng L?p Tùng</Animated.Text>
+        <Animated.Text style={animDecay.getLayout()}>Hello World !</Animated.Text>
         <View style={styles.containerBtn}>
             <TouchableOpacity onPress = {this._onPress.bind(this)}>
               <Text style={styles.btn}>press Me</Text>
