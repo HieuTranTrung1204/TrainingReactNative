@@ -13,6 +13,7 @@ Thao tác với Animation
 
   + Animated.spring(): Create an animation with physical model by using velocity to create fluid motions as the toValue updates.
 
+  + Animated.sequence(): is one method for composing animations together. This will have an animation trigger one after the other
 
 1. Animated:
   + toValue: Animation value will update yo
