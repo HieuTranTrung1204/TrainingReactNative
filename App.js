@@ -13,7 +13,8 @@ import {
   TouchableOpacity,
   AppRegistry,
   Animated,
-  Easing
+  Easing,
+  PanResponder
 } from 'react-native';
 
 
@@ -21,31 +22,50 @@ export default class App extends Component{
   
   constructor(props){
     super(props);
+
+    _panResponder = {};
+
     this.state = {
-      animZoomFontSize: new Animated.Value(10),
+      pan: new Animated.ValueXY(0),
     }
   }
 
-  _onPress(){
-    Animated.timing(
-      this.state.animZoomFontSize,
-      {
-        toValue: 30,
-        duration: 400
-      }
-    ).start();
+  componentWillMount(){
+    _panResponder = PanResponder.create({
+      onStartShouldSetPanResponder:()=>true,
+      onMoveShouldSetPanResponder:()=>true,
+      onPanResponderGrant:this._onPanResponderGrant.bind(this),
+      onPanResponderMove: this._onPanResponderMove.bind(this),
+      onPanResponderRelease: this._onPanResponderRelease(this)
+    })
+  }
+
+  _onPanResponderGrant(event,gestureState){
+    this.state.pan.setOffset({x:event.nativeEvent.x,y:gestureState.dy})
+  }
+  
+  _onPanResponderMove(event,gestureState){
+    this.state.pan.setValue({x:gestureState.dx, y: gestureState.dy})
+  }
+
+  _onPanResponderRelease(event,gestureState){
+
   }
   
   render() {
 
+    let { pan } = this.state;
+    let [ translateX, translateY ] = [ pan.x, pan.y ];
+    let myTransForm = {transform:[{translateX},{translateY}]}
+
     return (
       <View style={styles.container}>
-        <Animated.Text style={{fontSize: this.state.animZoomFontSize}}>Ðu?ng L?p Tùng</Animated.Text>
-        <View style={styles.containerBtn}>
-            <TouchableOpacity onPress = {this._onPress.bind(this)}>
-              <Text style={styles.btn}>press Me</Text>
-            </TouchableOpacity>
-        </View>
+        <Animated.View
+          style={[styles.circle,myTransForm]}
+          {..._panResponder.panHandlers}
+        >
+
+        </Animated.View>
       </View>
     );
   }
@@ -56,14 +76,10 @@ const styles = StyleSheet.create({
     flex: 1,
     
   },
-  containerBtn: {
-    flex:1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  btn: {
-    color: 'white',
-    padding: 10,
-    backgroundColor: 'green'
+  circle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'aqua'
   },
 });
