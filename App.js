@@ -10,10 +10,9 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  AppRegistry,
-  Animated,
-  Easing
+  FlatList,
+  LayoutAnimation,
+  UIManager
 } from 'react-native';
 
 
@@ -21,31 +20,50 @@ export default class App extends Component{
   
   constructor(props){
     super(props);
+
+    if(Platform.OS === "android"){
+      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+
+    arrayData = ["Đường Lập Tùng","Barry Allen","Kim So Huyn"]
+
     this.state = {
-      animZoomFontSize: new Animated.Value(10),
+     arr: arrayData,
     }
   }
 
-  _onPress(){
-    Animated.timing(
-      this.state.animZoomFontSize,
-      {
-        toValue: 30,
-        duration: 400
-      }
-    ).start();
+  _addData(){
+    let name = "Nguyễn Văn C";
+
+    myCustomAnim = {
+      duration: 2000,
+      create: {
+        type: LayoutAnimation.Types.spring, // linear
+        property: LayoutAnimation.Properties.scaleXY,
+        springDamping: 0.7,
+      },
+      update: {
+        type: LayoutAnimation.Types.spring,
+        springDamping: 0.7,
+      },
+    }
+
+    LayoutAnimation.configureNext(myCustomAnim)
+    this.setState({arr: [...this.state.arr,name]})
   }
-  
+
   render() {
 
     return (
       <View style={styles.container}>
-        <Animated.Text style={{fontSize: this.state.animZoomFontSize}}>Ðu?ng L?p Tùng</Animated.Text>
-        <View style={styles.containerBtn}>
-            <TouchableOpacity onPress = {this._onPress.bind(this)}>
-              <Text style={styles.btn}>press Me</Text>
-            </TouchableOpacity>
-        </View>
+        <Text onPress={this._addData.bind(this)}>Add data</Text>
+        <FlatList 
+          data={this.state.arr}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item})=><View style={{margin:5,padding:10,backgroundColor:'aqua'}}>
+                                      <Text style={{color:'black'}}>{item}</Text>
+                                </View>}
+        />
       </View>
     );
   }
@@ -56,14 +74,5 @@ const styles = StyleSheet.create({
     flex: 1,
     
   },
-  containerBtn: {
-    flex:1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  btn: {
-    color: 'white',
-    padding: 10,
-    backgroundColor: 'green'
-  },
+  
 });

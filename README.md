@@ -21,6 +21,12 @@ Thao tác với Animation
   + delay: Start the Anim after delay ( Default: 0 ) (ms)  
   + useNativeDriver: Uses the native driver when true. Default is false
 
+2. LayoutAnimation:
+  + create: {
+    type: LayoutAnimation.Types,
+    property: LayoutAnimation.Properties
+    springDamping: float 
+  }
 
 ---------------------- NOTE METHOD ----------------------
 
@@ -30,3 +36,5 @@ Thao tác với Animation
     + addListener
     + removeListener
     + stopAnimation
+
+
