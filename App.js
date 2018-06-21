@@ -8,31 +8,26 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
+  TouchableOpacity,
+  View, 
   Text,
-  View
+  Dimensions
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+var {height,width} = Dimensions.get('window');
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component{
+  
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+      <TouchableOpacity style={styles.btnContainerOrder}>
+      <Text style={styles.btnOrder}>Order now</Text>
+        </TouchableOpacity>        
+        <TouchableOpacity style={styles.btnContainer}>
+          <Text style={styles.btn}>Join now</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -41,18 +36,39 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+
+  btnContainer:{
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:'#00AF66',
+    height:60,
+    width:120,
+    borderRadius: 40,
+    position:'absolute',
+    bottom:15,
+    right:15
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  btn:{
+    color:'white',
+    fontSize:20
+  },
+
+  btnContainerOrder:{
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor: '#02864B',
+    height:35,
+    width:100,
+    borderRadius: 40,
+    position:'absolute',
+    bottom:15,
+    left:15
+  },
+
+  btnOrder:{
+    color:'white',
+    fontSize:16
   },
 });
