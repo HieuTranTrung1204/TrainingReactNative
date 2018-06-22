@@ -20,22 +20,14 @@ echo.
 
 echo 	0. Set up
 echo 	1. Build Android
-echo 	2. Build Win32
-echo 	3. Build SO
-echo 	4. Build APK Debug
-echo 	5. Build Full (SO + Apk)
 
-echo 	99. Exit
 
 echo.
 set /p opt=		Enter choose: 
 
 if "%opt%"=="0" goto Set_up
 if "%opt%"=="1" goto Build_Android
-if "%opt%"=="2" goto Build_Win32
-if "%opt%"=="3" goto Build_Native
-if "%opt%"=="4" goto Build_Apk
-if "%opt%"=="5" goto Build_Full
+
 
 REM-------------------------Function--------------------------
 :fSetup
@@ -44,18 +36,7 @@ REM-------------------------Function--------------------------
 :fBuild_Android
 	call react-native run-android
 	exit /b
-:fBuild_Native
-	echo Build SO
-	cd %FBUILD%
-	call %FBUILD%\FBuild.exe -config %FBUILD_CONFIG_NATIVE%
-	exit /b
-:fBuild_Apk
-	echo Build APK
-	cd %Prj_ANDROID%
-	call gradlew.bat assembleDebug
-	adb install -r app\build\outputs\apk\debug\app-debug.apk
-	adb shell am start -n "hieu.com.a3dengine/hieu.com.a3dengine.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
-	exit /b
+
 REM-----------------------------------------------------------
 
 REM------------ 00. Set Up.-------------
@@ -69,35 +50,6 @@ REM------------ 01. Build Android-------------
 goto :End
 REM----------------------------------------
 
-REM------------ 02. Build Win32------------
-:Build_Win32
-	echo Build win32
-	cd %FBUILD%
-	call %FBUILD%\FBuild.exe -config %FBUILD_CONFIG_WIN32%
-goto :End	
-
-REM------------ 03. Build SO---------------
-:Build_Native
-	call :fBuild_Native
-goto :End	
-REM----------------------------------------
-
-REM------------ 03. Build APK---------------
-:Build_Apk
-	call :fBuild_Apk
-
-goto :End	
-REM----------------------------------------
-
-REM------------ 03. Build Full---------------
-:Build_Full
-	echo Build Full SO + Apk
-
-	call :fBuild_Native
-	call :fBuild_Apk
-	
-goto :End	
-REM----------------------------------------
 
 :End
 
