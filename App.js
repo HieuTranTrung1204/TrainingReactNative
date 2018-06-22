@@ -9,30 +9,73 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import DrawerLayout from 'react-native-drawer-layout';
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component{
+  
+  constructor(props){
+    super(props);
+
+    arr = ['Home','Cards','Order','History','Inbox','Stores','Gift','Music'];
+
+    setting = require('./img/setting.png');
+    baseline = require('./img/baseline.png');
+
+  }
+
+  _renderItem(){
+    views = [];
+    let dem = 0;
+    for(let item of arr){
+      views.push(
+        <TouchableOpacity key={item} style={{ padding: 15 }}>
+          <Text style={{ color: 'white', fontSize: 18, marginLeft: 10 }}>{item}</Text>
+        </TouchableOpacity>
+      )
+    }  
+    return views;
+  }
+
+  _renderNavigationView(){
+    return(
+      <ScrollView>
+        <View style={styles.headerDrawer}>
+          <Text style={{color:'white',fontSize:18,marginLeft:10}}>dfndfndfndf</Text>
+        </View>
+        <View style={styles.bodyDrawer}>
+          {this._renderItem()}
+          <View style={{height:2,borderColor:'gray',borderWidth:1}} />
+          <TouchableOpacity>
+            <Image resizeMode='contain' source={setting} style={{height:30,width:30,backgroundColor:'#2D2926',marginLeft:20,marginTop:10}} />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+       <DrawerLayout
+        //drawerBackgroundColor={'rgba(0,0,0,0.5)'}
+        drawerBackgroundColor={'white'}
+        drawerWidth={300}
+        renderNavigationView={this._renderNavigationView.bind(this)}
+        ref={drawer => {
+          return (this.drawer = drawer);
+        }}
+        //drawerPosition={DrawerLayout.positions.Left}
+       >
+          <TouchableOpacity onPress={() => this.drawer.openDrawer()}>
+            <Image resizeMode='contain' source={baseline} style={{height:30,width:30,marginLeft:10,marginTop:10}} />
+          </TouchableOpacity>
+       </DrawerLayout>
       </View>
     );
   }
@@ -41,18 +84,14 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    //backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  headerDrawer: {
+    height:200,
+    backgroundColor: 'aqua',
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  bodyDrawer: {
+    height:500,
+    backgroundColor: '#2D2926',
   },
 });
