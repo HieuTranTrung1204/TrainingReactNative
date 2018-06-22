@@ -63,14 +63,12 @@ export default class App extends Component{
     return (
       <View style={styles.container}>
        <DrawerLayout
-        //drawerBackgroundColor={'rgba(0,0,0,0.5)'}
         drawerBackgroundColor={'white'}
         drawerWidth={300}
         renderNavigationView={this._renderNavigationView.bind(this)}
         ref={drawer => {
           return (this.drawer = drawer);
         }}
-        //drawerPosition={DrawerLayout.positions.Left}
        >
           <TouchableOpacity onPress={() => this.drawer.openDrawer()}>
             <Image resizeMode='contain' source={baseline} style={{height:30,width:30,marginLeft:10,marginTop:10}} />
