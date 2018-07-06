@@ -17,7 +17,7 @@ export default class App extends Component{
   render() {
     return (
       <View style={styles.container}>
-        
+        <Text style={styles.welcome}>Hello World, Welcome to React Native!</Text>
       </View>
     );
   }
@@ -28,5 +28,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 50,
+  }
 });
